@@ -8,13 +8,15 @@ public class SherlockValidString {
 		if( testString.length()>100000) return "NO";
 		testString=testString.replaceAll("\\s", ""); 
 		testString=testString.toLowerCase();
+		if( testString.length()==1) return "YES";
+		
 		int[] freqs = new int[26];
 		for(char c:testString.toCharArray()) {
 			++freqs[((int)c)-'a'];
 		}
 		
-		int mode = findMode(freqs);				
-		System.out.println( String.format("Mode of %s is %d",testString,mode));
+		int mode = findModeOfNonZeroValues(freqs);				
+//		System.out.println( String.format("Mode of %s is %d",testString,mode));
 		
 		int numberOfModesFound = 0;
 		int spotsOccupiedByNumbers = 0;
@@ -27,19 +29,19 @@ public class SherlockValidString {
 			if(freqs[i]==1) numberOfFrequenciesOfOne++;
 			if(freqs[i]%2==1) numberOfFrequenciesOfOddOccurrences++;			
 		}
-		System.out.println( String.format("Numbers of modes found in %s is %d",testString,numberOfModesFound));
-		System.out.println( String.format("Spots occupied by numbers in %s is %d",testString,spotsOccupiedByNumbers));
-		System.out.println( String.format("Numbers of 1-frequencies in %s is %d",testString,numberOfFrequenciesOfOne));
-		System.out.println( String.format("Numbers of Odd-frequencies in %s is %d",testString,numberOfFrequenciesOfOddOccurrences));
+//		System.out.println( String.format("Numbers of modes found in %s is %d",testString,numberOfModesFound));
+//		System.out.println( String.format("Spots occupied by numbers in %s is %d",testString,spotsOccupiedByNumbers));
+//		System.out.println( String.format("Numbers of 1-frequencies in %s is %d",testString,numberOfFrequenciesOfOne));
+//		System.out.println( String.format("Numbers of Odd-frequencies in %s is %d",testString,numberOfFrequenciesOfOddOccurrences));
 
 		if(numberOfFrequenciesOfOddOccurrences==1) {
 			for( int i=0;i<freqs.length;i++) {
 				if(freqs[i]%2==1) freqOfOddOccurrence=freqs[i];
 			}
-			System.out.println( String.format("Frequency value of the only Odd-frequency in %s is %d",testString,freqOfOddOccurrence));
+//			System.out.println( String.format("Frequency value of the only Odd-frequency in %s is %d",testString,freqOfOddOccurrence));
 		}		
-		System.out.println();
-		System.out.println("---------------------------------");
+//		System.out.println();
+//		System.out.println("---------------------------------");
 		
 		if(numberOfModesFound==spotsOccupiedByNumbers)
 			return "YES";
@@ -51,25 +53,23 @@ public class SherlockValidString {
 		return "NO";
 	}
 	
-	public int findMode(int[] originalArray)
+	public int findModeOfNonZeroValues(int[] originalArray)
 	{
-		int[] curatedArray= originalArray;
-
 	    HashMap<Integer,Integer> hm = new HashMap<Integer,Integer>();
 	    int max  = 1;
 	    int mode = 0;
-	    for(int i = 0; i < curatedArray.length; i++) {
-	        if (hm.get(curatedArray[i]) != null) {
-	            int count = hm.get(curatedArray[i]);
+	    for(int i = 0; i < originalArray.length; i++) {
+	        if (hm.get(originalArray[i]) != null) {
+	            int count = hm.get(originalArray[i]);
 	            count++;
-	            hm.put(curatedArray[i], count);
+	            hm.put(originalArray[i], count);
 	            if(count > max) {
 	                max  = count;
-	                mode = curatedArray[i];
+	                mode = originalArray[i];
 	            }
 	        }
-	        else if(curatedArray[i]>0)
-	            hm.put(curatedArray[i],1);
+	        else if(originalArray[i]>0)
+	            hm.put(originalArray[i],1);
 	    }
 	    return mode;
 	}	

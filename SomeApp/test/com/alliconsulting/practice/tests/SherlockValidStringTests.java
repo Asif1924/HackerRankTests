@@ -10,6 +10,12 @@ class SherlockValidStringTests {
 	SherlockValidString svs = new SherlockValidString();
 	
 	@Test
+	void test0() {
+		String testString = "b";		
+		Assert.assertEquals("YES", svs.isValid(testString));
+	}	
+	
+	@Test
 	void test1() {
 		String testString = "aabbcd";		
 		Assert.assertEquals("NO", svs.isValid(testString));
