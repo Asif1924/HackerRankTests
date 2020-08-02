@@ -1,9 +1,6 @@
 package com.alliconsulting.practice.tests;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.HashMap;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -41,13 +38,88 @@ class GMCodingTests {
 		cashReg.put(""+20.00,"1;TWENTY");
 		cashReg.put(""+50.00,"1;FIFTY");
 		cashReg.put(""+100.00,"1;ONE HUNDRED");		
-		//String line = "17;16.00";
-		//String line = "35;35";
-		
-		//Assert.assertEquals("NICKEL,PENNY",gch.getChange(line));
-		int[] coins = gch.getCoins(0.06, cashReg);
-		//double rem = gch.largestCoin(0.06, cashReg);
-		
-	}
 
+		Assert.assertEquals("NICKEL,PENNY",gch.getChange(line, cashReg));
+	}
+	
+	@Test
+	void test_change2() {
+		String line = "17;16.00";
+		HashMap<String,String> cashReg = new HashMap<String,String>();
+		cashReg.put(""+0.01,"1;PENNY");
+		cashReg.put(""+0.05,"1;NICKEL");
+		cashReg.put(""+0.10,"1;DIME");
+		cashReg.put(""+0.25,"1;QUARTER");
+		cashReg.put(""+0.50,"1;HALF DOLLAR");
+		cashReg.put(""+1.00,"1;ONE");
+		cashReg.put(""+2.00,"1;TWO");
+		cashReg.put(""+5.00,"1;FIVE");
+		cashReg.put(""+10.00,"1;TEN");
+		cashReg.put(""+20.00,"1;TWENTY");
+		cashReg.put(""+50.00,"1;FIFTY");
+		cashReg.put(""+100.00,"1;ONE HUNDRED");		
+		
+		Assert.assertEquals("ERROR",gch.getChange(line, cashReg));
+	}	
+
+	@Test
+	void test_change3() {
+		String line = "35;35";
+		HashMap<String,String> cashReg = new HashMap<String,String>();
+		cashReg.put(""+0.01,"1;PENNY");
+		cashReg.put(""+0.05,"1;NICKEL");
+		cashReg.put(""+0.10,"1;DIME");
+		cashReg.put(""+0.25,"1;QUARTER");
+		cashReg.put(""+0.50,"1;HALF DOLLAR");
+		cashReg.put(""+1.00,"1;ONE");
+		cashReg.put(""+2.00,"1;TWO");
+		cashReg.put(""+5.00,"1;FIVE");
+		cashReg.put(""+10.00,"1;TEN");
+		cashReg.put(""+20.00,"1;TWENTY");
+		cashReg.put(""+50.00,"1;FIFTY");
+		cashReg.put(""+100.00,"1;ONE HUNDRED");		
+		
+		Assert.assertEquals("ZERO",gch.getChange(line, cashReg));
+	}	
+	
+	@Test
+	void test_change4() {
+		String line = "35;37";
+		HashMap<String,String> cashReg = new HashMap<String,String>();
+		cashReg.put(""+0.01,"1;PENNY");
+		cashReg.put(""+0.05,"1;NICKEL");
+		cashReg.put(""+0.10,"1;DIME");
+		cashReg.put(""+0.25,"1;QUARTER");
+		cashReg.put(""+0.50,"1;HALF DOLLAR");
+		cashReg.put(""+1.00,"1;ONE");
+		cashReg.put(""+2.00,"1;TWO");
+		cashReg.put(""+5.00,"1;FIVE");
+		cashReg.put(""+10.00,"1;TEN");
+		cashReg.put(""+20.00,"1;TWENTY");
+		cashReg.put(""+50.00,"1;FIFTY");
+		cashReg.put(""+100.00,"1;ONE HUNDRED");		
+		
+		Assert.assertEquals("TWO",gch.getChange(line, cashReg));
+	}	
+	
+	@Test
+	void test_change5() {
+		String line = "100;250";
+		HashMap<String,String> cashReg = new HashMap<String,String>();
+		cashReg.put(""+0.01,"1;PENNY");
+		cashReg.put(""+0.05,"1;NICKEL");
+		cashReg.put(""+0.10,"1;DIME");
+		cashReg.put(""+0.25,"1;QUARTER");
+		cashReg.put(""+0.50,"1;HALF DOLLAR");
+		cashReg.put(""+1.00,"1;ONE");
+		cashReg.put(""+2.00,"1;TWO");
+		cashReg.put(""+5.00,"1;FIVE");
+		cashReg.put(""+10.00,"1;TEN");
+		cashReg.put(""+20.00,"1;TWENTY");
+		cashReg.put(""+50.00,"1;FIFTY");
+		cashReg.put(""+100.00,"1;ONE HUNDRED");		
+		
+		Assert.assertEquals("TWO",gch.getChange(line, cashReg));
+	}	
+	
 }

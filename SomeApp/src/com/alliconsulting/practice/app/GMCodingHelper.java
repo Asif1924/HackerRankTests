@@ -2,7 +2,9 @@ package com.alliconsulting.practice.app;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class GMCodingHelper {
 	public String getDupeNumber( String[] numbers ) {
@@ -15,32 +17,28 @@ public class GMCodingHelper {
 				dupe = numbers[i];
 				break;
 			}
-		}
-		
-		System.out.println(dupe);
-		
+		}		
+		System.out.println(dupe);		
 		return dupe;
 	}
 	
-	public String getChange(String line) {
+	public String getChange(String line, HashMap<String,String> cashReg) {
 		String result = "";
-
 		String amounts[] = line.split(";");
-
 		
 		BigDecimal pp = new BigDecimal(Double.valueOf(amounts[0])).setScale(2, RoundingMode.HALF_EVEN);
 		BigDecimal ch = new BigDecimal(Double.valueOf(amounts[1])).setScale(2, RoundingMode.HALF_EVEN);
 		double change = 0.00;
 		System.out.println(pp);
 		System.out.println(ch);
-		
+				
 		if(ch.doubleValue()>pp.doubleValue()) {
 			change = ch.subtract(pp).doubleValue();
-			
-			if(change==0.06) {
-				result="NICKEL,PENNY";
-			}else
-				result = String.format("CHANGE %.2f", change);
+			double someChange[] = getAnyChange(change,cashReg);
+			for( int i=0; i<someChange.length;i++ ) {
+				double thisChange=someChange[i];
+				result += cashReg.get(""+thisChange).split(";")[1]+( (i<someChange.length-1)? ",":"" );
+			}
 		}		
 		if(ch.doubleValue() < pp.doubleValue()) {
 			result = "ERROR";
@@ -53,38 +51,38 @@ public class GMCodingHelper {
 		return result;
 	}
 	
-	
-	
-	public int[] getCoins(double someNumber, HashMap<String,String> cashReg) {
-		int[] result = new int[] {};
+	public double[] getAnyChange(double someNumber, HashMap<String,String> cashReg) {
+		List<Double> changeList = new ArrayList<Double>();
 		
 		BigDecimal remainder=new BigDecimal(someNumber).setScale(2, RoundingMode.HALF_EVEN);
-		int i=1;
-		while(i<4) {
-			BigDecimal lc = new BigDecimal(largestCoin(remainder.doubleValue(),cashReg)).setScale(2, RoundingMode.HALF_EVEN);
+		while(remainder.doubleValue()>0) {
+			BigDecimal lc = new BigDecimal(getLargestChange(remainder.doubleValue(),cashReg)).setScale(2, RoundingMode.HALF_EVEN);
 			remainder = remainder.subtract(lc);
-			//remainder-=new BigDecimal(largestCoin(remainder,cashReg)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-			//remainder = new BigDecimal(remainder.subtract(new BigDecimal(largestCoin(remainder.doubleValue(),cashReg))).doubleValue());
-			i++;
+			changeList.add(lc.doubleValue());
 		}
+		double[] result = new double[changeList.size()];
 		
-		
+		for( int i=0; i<changeList.size();i++ ) {
+			result[i] = changeList.get(i);	
+			System.out.println( String.format("Change %d is %.2f", i,result[i]));
+		}
 		return result;
 	}
 	
-	public double largestCoin(double someNumber,HashMap<String,String> cashReg) {
+	public double getLargestChange(double someNumber,HashMap<String,String> cashReg) {
 		
 		for( String thisCoinValue:cashReg.keySet() ) {
 			BigDecimal thisCV = new BigDecimal(Double.valueOf(thisCoinValue)).setScale(2, RoundingMode.HALF_EVEN);
 			String thisValue = cashReg.get(thisCoinValue);
 			if( thisCV.doubleValue()<=someNumber && Integer.valueOf(thisValue.split(";")[0])==1 ) {
 				BigDecimal remainderBD=new BigDecimal(someNumber-thisCV.doubleValue()).setScale(2, RoundingMode.HALF_EVEN);;
-				if( cashReg.get(thisValue).split(";").length==2)
+				if( cashReg.get(thisCoinValue).split(";").length==2)
 					cashReg.put(thisCoinValue, cashReg.get(thisCoinValue)+";"+remainderBD);
-				else if(cashReg.get(thisValue).split(";").length==3 )
-					cashReg.put(thisCoinValue, cashReg.get(thisCoinValue)+";"+remainderBD);
+				else if(cashReg.get(thisCoinValue).split(";").length==3 ) {
+					cashReg.put(thisCoinValue, cashReg.get(thisCoinValue).split(";")[0]+";"+cashReg.get(thisCoinValue).split(";")[1]+";"+remainderBD );
+				}
 			}
-			System.out.println(String.format("%s %s", thisCV,cashReg.get(thisCoinValue)));			
+			System.out.println(String.format("%s:::%s", thisCoinValue,cashReg.get(thisCoinValue)));				
 		}
 		
 		double smallestRemainder = 1;
@@ -106,6 +104,7 @@ public class GMCodingHelper {
 					break;
 				}					
 			}
+							
 		}
 		System.out.println(largestCoin);
 		System.out.println("--------------");
