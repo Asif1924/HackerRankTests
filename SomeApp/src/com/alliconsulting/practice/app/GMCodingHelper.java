@@ -58,10 +58,13 @@ public class GMCodingHelper {
 	public int[] getCoins(double someNumber, HashMap<String,String> cashReg) {
 		int[] result = new int[] {};
 		
-		double remainder=someNumber;
+		BigDecimal remainder=new BigDecimal(someNumber).setScale(2, RoundingMode.HALF_EVEN);
 		int i=1;
 		while(i<4) {
-			remainder-=new BigDecimal(largestCoin(remainder,cashReg)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+			BigDecimal lc = new BigDecimal(largestCoin(remainder.doubleValue(),cashReg)).setScale(2, RoundingMode.HALF_EVEN);
+			remainder = remainder.subtract(lc);
+			//remainder-=new BigDecimal(largestCoin(remainder,cashReg)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+			//remainder = new BigDecimal(remainder.subtract(new BigDecimal(largestCoin(remainder.doubleValue(),cashReg))).doubleValue());
 			i++;
 		}
 		
