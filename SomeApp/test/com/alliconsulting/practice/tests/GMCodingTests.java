@@ -45,8 +45,8 @@ class GMCodingTests {
 		//String line = "35;35";
 		
 		//Assert.assertEquals("NICKEL,PENNY",gch.getChange(line));
-		//int[] coins = gch.getCoins(0.06, cashReg);
-		double rem = gch.largestCoin(0.06, cashReg);
+		int[] coins = gch.getCoins(0.06, cashReg);
+		//double rem = gch.largestCoin(0.06, cashReg);
 		
 	}
 

@@ -58,10 +58,11 @@ public class GMCodingHelper {
 	public int[] getCoins(double someNumber, HashMap<String,String> cashReg) {
 		int[] result = new int[] {};
 		
-		int i=1;
 		double remainder=someNumber;
-		while(remainder>=0) {
-			remainder-=largestCoin(remainder,cashReg);
+		int i=1;
+		while(i<4) {
+			remainder-=new BigDecimal(largestCoin(remainder,cashReg)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+			i++;
 		}
 		
 		
@@ -69,11 +70,11 @@ public class GMCodingHelper {
 	}
 	
 	public double largestCoin(double someNumber,HashMap<String,String> cashReg) {
-		double returnCoin=0.0;
 		
 		for( String thisCoinValue:cashReg.keySet() ) {
 			BigDecimal thisCV = new BigDecimal(Double.valueOf(thisCoinValue)).setScale(2, RoundingMode.HALF_EVEN);
-			if( thisCV.doubleValue()<=someNumber) {
+			String thisValue = cashReg.get(thisCoinValue);
+			if( thisCV.doubleValue()<=someNumber && Integer.valueOf(thisValue.split(";")[0])==1 ) {
 				BigDecimal remainderBD=new BigDecimal(someNumber-thisCV.doubleValue()).setScale(2, RoundingMode.HALF_EVEN);;
 				cashReg.put(thisCoinValue, cashReg.get(thisCoinValue)+";"+remainderBD);
 			}
@@ -95,13 +96,14 @@ public class GMCodingHelper {
 				double thisRemainder = new BigDecimal(thisValue.split(";")[2]).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
 				if(smallestRemainder==thisRemainder) {
 					largestCoin=new BigDecimal(thisCoinValue).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-					cashReg.put(thisCoinValue, cashReg.get(thisCoinValue)+";"+remainderBD);
+					cashReg.put(thisCoinValue, cashReg.get(thisCoinValue).replace("1;", "0;"));
 					break;
 				}					
 			}
 		}
 		System.out.println(largestCoin);
-		return largestCoin;
+		System.out.println("--------------");
+		return new BigDecimal(largestCoin).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
 	}
 	
 }
