@@ -79,7 +79,10 @@ public class GMCodingHelper {
 			String thisValue = cashReg.get(thisCoinValue);
 			if( thisCV.doubleValue()<=someNumber && Integer.valueOf(thisValue.split(";")[0])==1 ) {
 				BigDecimal remainderBD=new BigDecimal(someNumber-thisCV.doubleValue()).setScale(2, RoundingMode.HALF_EVEN);;
-				cashReg.put(thisCoinValue, cashReg.get(thisCoinValue)+";"+remainderBD);
+				if( cashReg.get(thisValue).split(";").length==2)
+					cashReg.put(thisCoinValue, cashReg.get(thisCoinValue)+";"+remainderBD);
+				else if(cashReg.get(thisValue).split(";").length==3 )
+					cashReg.put(thisCoinValue, cashReg.get(thisCoinValue)+";"+remainderBD);
 			}
 			System.out.println(String.format("%s %s", thisCV,cashReg.get(thisCoinValue)));			
 		}
