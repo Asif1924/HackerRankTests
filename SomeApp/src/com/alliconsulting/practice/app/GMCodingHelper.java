@@ -69,13 +69,13 @@ public class GMCodingHelper {
 		return result;
 	}
 	
-	public double getLargestChange(double someNumber,HashMap<String,String> cashReg) {
+	public double getLargestChange(double remainderFromSubtraction,HashMap<String,String> cashReg) {
 		
 		for( String thisCoinValue:cashReg.keySet() ) {
 			BigDecimal thisCV = new BigDecimal(Double.valueOf(thisCoinValue)).setScale(2, RoundingMode.HALF_EVEN);
 			String thisValue = cashReg.get(thisCoinValue);
-			if( thisCV.doubleValue()<=someNumber && Integer.valueOf(thisValue.split(";")[0])==1 ) {
-				BigDecimal remainderBD=new BigDecimal(someNumber-thisCV.doubleValue()).setScale(2, RoundingMode.HALF_EVEN);;
+			if( thisCV.doubleValue()<=remainderFromSubtraction && Integer.valueOf(thisValue.split(";")[0])==1 ) {
+				BigDecimal remainderBD=new BigDecimal(remainderFromSubtraction-thisCV.doubleValue()).setScale(2, RoundingMode.HALF_EVEN);;
 				if( cashReg.get(thisCoinValue).split(";").length==2)
 					cashReg.put(thisCoinValue, cashReg.get(thisCoinValue)+";"+remainderBD);
 				else if(cashReg.get(thisCoinValue).split(";").length==3 ) {
@@ -93,22 +93,22 @@ public class GMCodingHelper {
 				smallestRemainder = thisRemainder;
 		}
 		
-		double largestCoin = 0.0;
-		for( String thisCoinValue:cashReg.keySet()) {
-			String thisValue = cashReg.get(thisCoinValue);
+		double largestChange = 0.0;
+		for( String thisChangeValue:cashReg.keySet()) {
+			String thisValue = cashReg.get(thisChangeValue);
 			if(thisValue.split(";").length==3) {
 				double thisRemainder = new BigDecimal(thisValue.split(";")[2]).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
 				if(smallestRemainder==thisRemainder) {
-					largestCoin=new BigDecimal(thisCoinValue).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-					cashReg.put(thisCoinValue, cashReg.get(thisCoinValue).replace("1;", "0;"));
+					largestChange=new BigDecimal(thisChangeValue).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+					cashReg.put(thisChangeValue, cashReg.get(thisChangeValue).replace("1;", "0;"));
 					break;
 				}					
 			}
 							
 		}
-		System.out.println(largestCoin);
+		System.out.println(largestChange);
 		System.out.println("--------------");
-		return new BigDecimal(largestCoin).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+		return new BigDecimal(largestChange).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
 	}
 	
 }
