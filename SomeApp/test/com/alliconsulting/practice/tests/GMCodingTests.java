@@ -119,7 +119,7 @@ class GMCodingTests {
 		cashReg.put(""+50.00,"1;FIFTY");
 		cashReg.put(""+100.00,"1;ONE HUNDRED");		
 		
-		Assert.assertEquals("TWO",gch.getChange(line, cashReg));
+		Assert.assertEquals("ONE HUNDRED,FIFTY",gch.getChange(line, cashReg));
 	}	
 	
 }

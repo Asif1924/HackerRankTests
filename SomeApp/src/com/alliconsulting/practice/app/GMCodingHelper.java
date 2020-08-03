@@ -85,10 +85,10 @@ public class GMCodingHelper {
 			System.out.println(String.format("%s:::%s", thisCoinValue,cashReg.get(thisCoinValue)));				
 		}
 		
-		double smallestRemainder = 1;
+		double smallestRemainder = 100000.00;
 		for( String thisCoinValue:cashReg.keySet() ) {
 			String thisValue = cashReg.get(thisCoinValue);			
-			double thisRemainder = (thisValue.split(";").length==3) ? new BigDecimal(thisValue.split(";")[2]).setScale(2, RoundingMode.HALF_EVEN).doubleValue() : 1;
+			double thisRemainder = (thisValue.split(";").length==3) ? new BigDecimal(thisValue.split(";")[2]).setScale(2, RoundingMode.HALF_EVEN).doubleValue() : smallestRemainder;
 			if(thisRemainder<smallestRemainder)
 				smallestRemainder = thisRemainder;
 		}
