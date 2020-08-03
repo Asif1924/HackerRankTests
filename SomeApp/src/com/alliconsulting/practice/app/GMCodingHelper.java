@@ -104,7 +104,7 @@ public class GMCodingHelper {
 					break;
 				}					
 			}
-							
+			//System.out.println(String.format("%s:::%s", thisChangeValue,cashReg.get(thisChangeValue)));							
 		}
 		System.out.println(largestChange);
 		System.out.println("--------------");
