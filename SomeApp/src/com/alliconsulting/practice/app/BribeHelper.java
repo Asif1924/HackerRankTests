@@ -3,7 +3,7 @@ package com.alliconsulting.practice.app;
 public class BribeHelper {
 
 	public void minimumBribes(int[] q) {
-		int numBribes = 0;
+		int totalBribes = 0;
 		int index = 0;
 		for(int i=0;i<q.length;i++) {
 			index = i;
@@ -12,11 +12,12 @@ public class BribeHelper {
 					System.out.println("Too chaotic");					
 					break;
 				}
-				numBribes+=numBribesForThis(q[i],i);
+				totalBribes+=numBribesForThis(q[i],i);
 			}
+			System.out.println( String.format("index:%d, number:%d, bribes:%d", i,q[i], (q[i]>i) ? numBribesForThis(q[i],i) : 0));
 		}
 		if(index==q.length-1)
-			System.out.println(""+numBribes);
+			System.out.println(""+totalBribes);
 	}
 	
 	public boolean isOutOfPlace(int n, int position) {
