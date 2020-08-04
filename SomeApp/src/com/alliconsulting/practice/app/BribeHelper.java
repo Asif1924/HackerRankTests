@@ -2,27 +2,28 @@ package com.alliconsulting.practice.app;
 
 public class BribeHelper {
 
-	public void minimumBribes(int[] queue) {
-		//initial state will always be 1 to queue.length
-		int numberOfIncorrects=0;
-		for(int i=0;i<queue.length-1;i++) {
-			if(!correctOrder(queue[i],queue[i+1]) && !correctPosition(queue[i],queue[i+1],i+1,i+2)) {
-				numberOfIncorrects++;
+	public void minimumBribes(int[] q) {
+		int numBribes = 0;
+		int index = 0;
+		for(int i=0;i<q.length;i++) {
+			index = i;
+			if(isOutOfPlace(q[i],i)) {
+				if(numBribesForThis(q[i],i)>2) {
+					System.out.println("Too chaotic");					
+					break;
+				}
+				numBribes+=numBribesForThis(q[i],i);
 			}
 		}
-		System.out.println(numberOfIncorrects);
+		if(index==q.length-1)
+			System.out.println(""+numBribes);
 	}
 	
-	public boolean correctOrder(int a, int b) {
-		return (a<b && b-a==1);
+	public boolean isOutOfPlace(int n, int position) {
+		return n!=position+1;
 	}
 	
-	public boolean correctPosition(int a, int b, int x, int y) {
-		return (a==x && b==y);
+	public int numBribesForThis(int n, int currentIndex) {
+		return (n-currentIndex>=1) ? Math.abs(currentIndex-(n-1)) : 0;
 	}
-	
-	public int[] swap(int a, int b) {
-		return new int[]{b,a};
-	}
-
 }
