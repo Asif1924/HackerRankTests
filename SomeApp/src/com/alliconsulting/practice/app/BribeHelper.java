@@ -2,9 +2,34 @@ package com.alliconsulting.practice.app;
 
 public class BribeHelper {
 
+	/*
+	 * Since the question only asks the number of bribes, 
+	 * there's no need to really do a sorting, 
+	 * nor element swapping, nor "bubbling up" an element. 
+	 * All you need to do is to count the number of people 
+	 * who overtake a person.
+
+		void calc(vector<int> q)
+		{
+		    int ans = 0;
+		    for (int i = q.size() - 1; i >= 0; i--) {
+		        if (q[i] - (i + 1) > 2) {
+		            cout << "Too chaotic" << endl;
+		            return;
+		        }
+		        for (int j = max(0, q[i] - 2); j < i; j++)
+		            if (q[j] > q[i]) ans++;
+		    }
+		    cout << ans << endl;
+		}
+	 */
+	
+	
 	public void minimumBribes(int[] q) {
 		int totalBribes = 0;
 		int index = 0;
+		if(q.length>100000)
+			System.out.println("Too chaotic");
 		for(int i=0;i<q.length;i++) {
 			index = i;
 			if(isOutOfPlace(q[i],i,q)) {
