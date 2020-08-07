@@ -15,4 +15,11 @@ class MinSwapHelperTests {
 		Assert.assertEquals(3,msh.minimumSwaps(nums));
 	}
 
+	//4 3 1 2
+	@Test
+	void test2() {
+		int[] nums= {4, 3, 1, 2};
+		Assert.assertEquals(3,msh.minimumSwaps(nums));
+	}
+	
 }
