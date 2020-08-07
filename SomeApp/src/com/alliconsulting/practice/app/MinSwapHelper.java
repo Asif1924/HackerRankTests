@@ -4,14 +4,6 @@ import java.util.HashMap;
 
 public class MinSwapHelper {
 
-	/*
-	 * 	Given array 
-		After swapping  we get 
-		After swapping  we get 
-		After swapping  we get 
-		So, we need a minimum of  swaps to sort the array in ascending order.
-	 */
-	
 	public int minimumSwaps(int[] arr) {
 		int minswaps = 0;
 		HashMap<Integer,Integer> loc = new HashMap<Integer,Integer>();
