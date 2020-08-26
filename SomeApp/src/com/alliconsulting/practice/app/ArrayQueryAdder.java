@@ -43,6 +43,7 @@ index->	 1 2 3  4  5 6 7 8 9 10
 	
 	public long arrayManipulation2(int n, int[][] queries) {
 		if(n<3 && n>10000000) return 0;
+		
 		int height = queries.length;
 		if( height<1 && height > (2*100000)) return 0;
 
