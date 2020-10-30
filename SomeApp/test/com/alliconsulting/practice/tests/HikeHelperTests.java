@@ -49,4 +49,11 @@ class HikeHelperTests {
 		Assert.assertEquals(4,hh.countingValleys(hikePath.length(),hikePath));
 	}	
 	
+	@Test
+	void test_find_valleys7() {
+		HikeHelper hh = new HikeHelper();
+		String hikePath = "UD";
+		Assert.assertEquals(0,hh.countingValleys(hikePath.length(),hikePath));
+	}		
+	
 }
