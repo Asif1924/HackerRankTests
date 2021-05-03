@@ -7,7 +7,6 @@ public class HourGlass2D {
 	
 	public int hourglassSum(int[][] arr) {
 		return as.hourglassSum(arr);
-		//return os.hourglassMaxSum(arr);
 	}
 }
 
