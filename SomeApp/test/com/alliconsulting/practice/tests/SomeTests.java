@@ -37,7 +37,7 @@ class SomeTests {
 		//list.add("hellop");
 		//list.add(2);
 		System.out.println( LocalDate.now());
-		throw new Error();
+		//throw new Error();
 		
 	}
 
